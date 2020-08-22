@@ -88,6 +88,33 @@ class DoublyLinkedList {
     return nodeToRemove;
   }
 
+  //iterate through the link list in reverse to find the node to delete
+  removeByReverseData(data) {
+    let nodeToRemove;
+    let currentNode = this.tail;
+    while (currentNode !== null) {
+      if (currentNode.data === data) {
+        nodeToRemove = currentNode;
+        break;
+      }
+      currentNode = currentNode.getPreviousNode();
+    }
+    if (!nodeToRemove) {
+      return null;
+    }
+    if (nodeToRemove === this.tail) {
+      this.removeTail();
+    } else if (nodeToRemove === this.head) {
+      this.removeHead();
+    } else {
+      const previousNode = nodeToRemove.getPreviousNode();
+      const nextNode = nodeToRemove.getNextNode();
+      nextNode.setPreviousNode(previousNode);
+      previousNode.setNextNode(nextNode);
+    }
+    return nodeToRemove;
+  }
+
   printList() {
     let currentNode = this.head;
     let output = "<head> ";
